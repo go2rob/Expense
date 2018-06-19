@@ -1,6 +1,6 @@
 import Realm from "realm";
 import fs from "react-native-fs";
-import uuid from "uuid";
+import uuid from "uuid/v4";
 import _ from "lodash";
 
 const ExpenseSchema = {
@@ -12,6 +12,7 @@ const ExpenseSchema = {
     description: { type: "string", optional: true },
     amount: { type: "float", default: 0.0 },
     transactionAt: "date",
+    location: "string",
     account: "Account",
     type: "Type",
     createdAt: "date",
@@ -56,7 +57,8 @@ const TypeSchema = {
 
 const Database = new Realm({
   path: fs.DocumentDirectoryPath + "/default.realm",
-  schema: [ExpenseSchema, AccountSchema, TypeSchema]
+  schema: [ExpenseSchema, AccountSchema, TypeSchema],
+  schemaVersion: 1
 });
 
 export default {

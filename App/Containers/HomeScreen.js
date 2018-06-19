@@ -3,12 +3,22 @@ import {
   StyleSheet,
   Text,
   View,
-  Button
+  Button,
+  DatePickerAndroid
 } from 'react-native';
 
 type Props = {};
 export default class HomeScreen extends Component<Props> {
   render() {
+  const openAndroidDatePicker = async () => {
+    try {
+      const {action, year, month, day} = await DatePickerAndroid.open({
+        date: new Date()
+      });
+    } catch ({code, message}) {
+      console.warn('Cannot open date picker', message);
+    }
+  }
     const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
@@ -22,9 +32,9 @@ export default class HomeScreen extends Component<Props> {
           />
           <Text/>
           <Button
-            title="Login!"
+            title="Select Date!"
             style={{ alignSelf: "center" }}
-            onPress={() => alert("Login Actions")}
+            onPress={() => openAndroidDatePicker()}
           />
       </View>
     );
